@@ -1,0 +1,80 @@
+body {
+  background-color: black;
+  color: lime;
+  font-family: "Courier New", Courier, monospace;
+  text-align: center;
+  padding-top: 100px;
+  margin: 0;
+}
+
+h1 {
+  font-size: 50px;
+  color: red;
+  animation: flash 1s infinite;
+}
+
+p {
+  font-size: 20px;
+  margin: 20px;
+}
+
+.error {
+  color: red;
+  font-size: 30px;
+  animation: glitch 1s infinite;
+}
+
+@keyframes flash {
+  0% {
+    color: red;
+  }
+  50% {
+    color: lime;
+  }
+  100% {
+    color: red;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(2px, 2px);
+  }
+  20% {
+    transform: translate(-2px, -2px);
+  }
+  40% {
+    transform: translate(2px, 2px);
+  }
+  60% {
+    transform: translate(-2px, -2px);
+  }
+  80% {
+    transform: translate(2px, 2px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+.terminal {
+  background-color: black;
+  color: green;
+  padding: 20px;
+  font-size: 18px;
+  border: 1px solid lime;
+  width: 50%;
+  margin: 0 auto;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.terminal p {
+  margin: 0;
+}
+
+.warning {
+  font-size: 30px;
+  color: yellow;
+  text-transform: uppercase;
+}
