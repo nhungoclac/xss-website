@@ -1,13 +1,18 @@
 // netlify-functions/logRequest.js
 
 exports.handler = async (event, context) => {
-  // Lấy cookies từ headers
   const cookies = event.headers.cookie || "No cookies";
-  const url = event.queryStringParameters.url || "No URL";
+  const userAgent = event.queryStringParameters.userAgent || "No user agent";
+  const userIP = event.queryStringParameters.userIP || "No IP";
+  const time = event.queryStringParameters.time || "No time";
+  const language = event.queryStringParameters.language || "No language";
 
-  // Ghi thông tin vào log (có thể thay thế bằng việc lưu vào cơ sở dữ liệu hoặc gửi qua email)
+  // Ghi thông tin vào log
   console.log(`Cookies: ${cookies}`);
-  console.log(`URL: ${url}`);
+  console.log(`User Agent: ${userAgent}`);
+  console.log(`IP: ${userIP}`);
+  console.log(`Time: ${time}`);
+  console.log(`Language: ${language}`);
 
   return {
     statusCode: 200,
